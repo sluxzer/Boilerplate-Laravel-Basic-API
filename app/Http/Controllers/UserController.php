@@ -10,10 +10,17 @@ class UserController extends Controller
 {
     public function me(Request $request){
         try{
+            $user = $request->user();
+
             return response()->json([
                 'status' => true,
                 'message' => 'Success get profile',
-                'data' => $request->user()
+                'data' => [
+                    'name' => $user->name,
+                    'username' => $user->username,
+                    'email' => $user->email,
+                    'created_at' => $user->created_at,
+                ]
             ]);
         }catch (\Exception $exception){
             return response()->json([
