@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
 Route::middleware(['guest'])->group(function (){
     Route::post('/login', 'Auth\AuthController@login')->name('login');
     Route::post('/register', 'Auth\RegisterController@register');
