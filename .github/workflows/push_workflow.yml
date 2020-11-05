@@ -27,7 +27,9 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install
       - name: Generate Key
-        run: php artisan key:generate
+        run: |
+          php artisan key:generate
+          php artisan config:cache
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
