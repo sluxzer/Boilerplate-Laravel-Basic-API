@@ -27,14 +27,9 @@ class RegisterUserTest extends TestCase
             'email' => 'John@gmail.com'
         ]);
 
-        $response->dump();
-
-        $response->
-
-//        $response->assertOk();
         $response->assertJson([
             'status' => true,
-            'message' => 'Register user successfully'
+            'message' => 'Success Register'
         ]);
     }
 }
