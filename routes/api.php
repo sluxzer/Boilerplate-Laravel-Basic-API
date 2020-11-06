@@ -38,3 +38,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/update/profile', 'UserController@changeProfile');
     });
 });
+
+// bikin testing
