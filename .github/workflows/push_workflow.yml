@@ -19,7 +19,7 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Composer Dependencies
@@ -42,7 +42,7 @@ jobs:
     needs: [app-tests]
     if: github.ref == 'refs/heads/master'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - name: Fetch built assets from Artifacts
         uses: actions/download-artifact@v1
         with:
@@ -70,7 +70,7 @@ jobs:
     needs: [app-tests]
     if: github.ref == 'refs/heads/staging'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - name: Fetch built assets from Artifacts
         uses: actions/download-artifact@v1
         with:
