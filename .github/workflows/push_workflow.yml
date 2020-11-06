@@ -21,8 +21,6 @@ jobs:
         
     steps:
       - uses: actions/checkout@v1
-      - name: Verify MySQL connection from container 
-        run: mysql --host 127.0.0.1 -uroot -p -e "SHOW DATABASES"
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Composer Dependencies
