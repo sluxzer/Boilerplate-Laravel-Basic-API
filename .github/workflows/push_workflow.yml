@@ -29,7 +29,6 @@ jobs:
       - name: Generate Key
         run: |
           php artisan key:generate
-          php artisan migrate
           php artisan config:cache
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
