@@ -30,6 +30,7 @@ jobs:
         run: |
           php artisan key:generate
           php artisan config:cache
+          php artisan migrate:install
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
