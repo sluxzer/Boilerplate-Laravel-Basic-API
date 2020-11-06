@@ -37,7 +37,8 @@ jobs:
       - name: Generate Key
         run: |
           php artisan key:generate
-          php artisan config:cache
+          php artisan cache:clear
+          php artisan config:clear
           php artisan migrate
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
