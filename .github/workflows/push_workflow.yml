@@ -19,7 +19,7 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Composer Dependencies
@@ -30,45 +30,12 @@ jobs:
         run: |
           php artisan key:generate
           php artisan config:cache
-          php artisan migrate:install
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
         run: vendor/bin/phpunit
       - name: Execute tests (Unit and Feature tests) via JEST
         run: node_modules/.bin/jest
-  build-js-production:
-    name: Build JavaScript/CSS for PRODUCTION Server
-    runs-on: ubuntu-latest
-    needs: app-tests
-    if: github.ref == 'refs/heads/master'
-    steps:
-      - uses: actions/checkout@v1
-      - name: NPM Build
-        run: |
-          npm install
-          npm run prod
-      - name: Put built assets in Artifacts
-        uses: actions/upload-artifact@v1
-        with:
-          name: assets
-          path: public
-  build-js-staging:
-    name: Build JavaScript/CSS for STAGING Server
-    runs-on: ubuntu-latest
-    needs: app-tests
-    if: github.ref == 'refs/heads/staging'
-    steps:
-      - uses: actions/checkout@v1
-      - name: NPM Build
-        run: |
-          npm install
-          npm run dev
-      - name: Put built assets in Artifacts
-        uses: actions/upload-artifact@v1
-        with:
-          name: assets
-          path: public
   deploy-production:
     name: Deploy Project to PRODUCTION Server
     runs-on: ubuntu-latest
