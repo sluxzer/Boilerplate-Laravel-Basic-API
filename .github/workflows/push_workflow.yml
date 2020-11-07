@@ -33,7 +33,7 @@ jobs:
       - name: Install Composer Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
       - name: Install NPM Dependencies
-        run: npm instal
+        run: npm install
       - name: Start Mysql
         run: sudo /etc/init.d/mysql start
       - name: Generate Key
