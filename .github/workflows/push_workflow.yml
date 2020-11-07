@@ -54,13 +54,15 @@ jobs:
     # needs: [app-tests]
     if: github.ref == 'refs/heads/master'
     steps:
+      - uses: actions/checkout@v1
       - name: Setup PHP
         uses: shivammathur/setup-php@master
         with:
           php-version: 7.4
-          extension-csv: mbstring, bcmath
+          extension-csv: mbstring, 'bcmath
       - name: Composer install
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        # run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        run: composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader --no-suggest
       - name: Setup Deployer
         uses: atymic/deployer-php-action@master
         with:
