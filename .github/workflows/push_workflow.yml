@@ -39,6 +39,8 @@ jobs:
           php artisan key:generate
           php artisan cache:clear
           php artisan config:clear
+          service mysql status
+          php artisan migrate:install
           php artisan migrate
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
