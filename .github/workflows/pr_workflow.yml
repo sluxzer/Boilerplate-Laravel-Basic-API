@@ -34,6 +34,6 @@ jobs:
           service mysql status
           php artisan migrate
       - name: Execute tests (Unit and Feature tests) using PHPUnit
-          env:
-            DB_PORT: ${{ job.services.mysql.ports[3306] }}
+        env:
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
         run: ./vendor/bin/phpunit
