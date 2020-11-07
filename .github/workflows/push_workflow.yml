@@ -45,7 +45,6 @@ jobs:
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
         run: vendor/bin/phpunit
-        
   deploy-production:
     name: Deploy Project to PRODUCTION Server
     runs-on: ubuntu-latest
@@ -69,7 +68,6 @@ jobs:
         env:
           DOT_ENV: ${{ secrets.DOT_ENV_PRODUCTION }}
         run: dep deploy production --tag=${{ env.GITHUB_REF }} -vvv
-        
   deploy-staging:
     name: Deploy Project to STAGING Server
     runs-on: ubuntu-latest
