@@ -19,7 +19,16 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+      - name: Verify MySQL connection
+        run: |
+          mysql --version
+          sudo apt-get install -y mysql-client
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -e "SHOW DATABASES"
+      - name: Start Mysql
+        run: sudo /etc/init.d/mysql start
+      - name: Check Mysql Status
+        run: service mysql status
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Composer Dependencies
@@ -34,6 +43,6 @@ jobs:
           service mysql status
           php artisan migrate
       - name: Execute tests (Unit and Feature tests) using PHPUnit
-          env:
-            DB_PORT: ${{ job.services.mysql.ports[3306] }}
+        env:
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
         run: ./vendor/bin/phpunit
