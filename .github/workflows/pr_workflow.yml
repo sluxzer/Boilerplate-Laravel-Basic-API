@@ -14,7 +14,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: test_db
+          MYSQL_DATABASE: laravel
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -26,11 +26,16 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
       - name: Install NPM Dependencies
         run: npm install
-      - name: Generate key
-        run: php artisan key:generate
+      - name: Generate Key
+        run: |
+          php artisan key:generate
+          php artisan cache:clear
+          php artisan config:clear
+          service mysql status
+          php artisan migrate
       - name: Execute tests (Unit and Feature tests) using PHPUnit
-        env:
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          env:
+            DB_PORT: ${{ job.services.mysql.ports[3306] }}
         run: ./vendor/bin/phpunit
       - name: Execute tests (Unit and Feature tests) using JEST
         run: node_modules/.bin/jest
