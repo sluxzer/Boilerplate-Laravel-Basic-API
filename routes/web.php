@@ -20,3 +20,7 @@ Route::get('/', function () {
 Route::get('/tester', function (){
     return 'Test Deploy on Staging';
 });
+
+Route::get('/test/ritchi', function (){
+    return 'Test Deploy on Staging with Ritchie';
+});
